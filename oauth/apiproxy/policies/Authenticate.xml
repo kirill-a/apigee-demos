@@ -5,7 +5,7 @@
     <Request clearPayload="false" variable="calloutRequest">
         <Set>
             <Headers>
-                <Header name="Authorization">Basic Y2VydGlmeTpjZXJ0aWZ5MTIz</Header>
+                <Header name="Authorization">{serviceCallout.AuthorizationHeader}</Header>
                 <Header name="Content-Type">application/json</Header>
             </Headers>
             <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">{"username": "%request.formparam.username#","password": "%request.formparam.password#"}</Payload>

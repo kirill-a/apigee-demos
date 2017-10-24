@@ -34,6 +34,15 @@
                     <Condition>request.formparam.username = null OR request.formparam.password = null</Condition>
                 </Step>
                 <Step>
+                    <Name>Set-Login-Name</Name>
+                </Step>
+                <Step>
+                    <Name>Get-Creds-For-Auth-Endpoint</Name>
+                </Step>
+                <Step>
+                    <Name>Encode-Creds-Auth-Endpoint</Name>
+                </Step>
+                <Step>
                     <Name>Authenticate</Name>
                 </Step>
                 <Step>

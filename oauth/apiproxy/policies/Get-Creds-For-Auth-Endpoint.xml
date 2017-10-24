@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<KeyValueMapOperations async="false" continueOnError="false" enabled="true" name="Get-Creds-For-Auth-Endpoint" mapIdentifier="AuthCreds">
+    <DisplayName>Get Creds For Auth Endpoint</DisplayName>
+    <Get assignTo="pass">
+        <Key>
+            <Parameter ref="login"/>
+        </Key>
+    </Get>
+    <Scope>environment</Scope>
+</KeyValueMapOperations>
