@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="4" name="wishlists">
+    <Basepaths>/wishlists</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1508762242046</CreatedAt>
+    <CreatedBy>kirill_ageev@epam.com</CreatedBy>
+    <Description></Description>
+    <DisplayName>wishlists</DisplayName>
+    <LastModifiedAt>1508763079933</LastModifiedAt>
+    <LastModifiedBy>kirill_ageev@epam.com</LastModifiedBy>
+    <Policies>
+        <Policy>remove-header-authorization</Policy>
+        <Policy>verify-oauth-v2-access-token</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>node://config.js</Resource>
+        <Resource>node://server.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+    <validate>false</validate>
+</APIProxy>

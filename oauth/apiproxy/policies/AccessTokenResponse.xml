@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AccessTokenResponse">
+    <DisplayName>AccessTokenResponse</DisplayName>
+    <FaultRules/>
+    <Properties/>
+    <Set>
+        <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">{"access_token":"%oauthv2accesstoken.GenerateAccessToken.access_token#","refresh_token":"%oauthv2accesstoken.GenerateAccessToken.refresh_token#","expires_in":"%oauthv2accesstoken.GenerateAccessToken.expires_in#","scope":"%oauthv2accesstoken.GenerateAccessToken.scope#","username":"%oauthv2accesstoken.GenerateAccessToken.username#"}</Payload>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo type="response" transport="https" createNew="true"/>
+</AssignMessage>

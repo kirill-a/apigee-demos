@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>Decode-Basic-Authentication-Header</Name>
+            </Step>
+            <Step>
+                <Name>Verify-API-Key</Name>
+            </Step>
+            <Step>
+                <Name>Raise-Fault-Key-Or-Secret</Name>
+                <Condition>verifyapikey.Verify-API-Key.client_secret != inbound_client_secret</Condition>
+            </Step>
+            <Step>
+                <Name>Raise-Fault-Invalid-Grant</Name>
+                <Condition>((request.formparam.grant_type != "password") AND (request.formparam.grant_type != "refresh_token"))</Condition>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows>
+        <Flow name="GetAccessToken">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>Raise-Fault-Missing-Creds</Name>
+                    <Condition>request.formparam.username = null OR request.formparam.password = null</Condition>
+                </Step>
+                <Step>
+                    <Name>Authenticate</Name>
+                </Step>
+                <Step>
+                    <Name>Raise-Fault-Auth-Failed</Name>
+                    <Condition>servicecallout.Authenticate.failed == true</Condition>
+                </Step>
+                <Step>
+                    <Name>GetUserName</Name>
+                </Step>
+                <Step>
+                    <Name>GenerateAccessToken</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>AccessTokenResponse</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.formparam.grant_type == "password") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="GetRefreshToken">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RefreshAccessToken</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>RefreshTokenResponse</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.formparam.grant_type == "refresh_token") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="ValidateToken">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>ValidateToken</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>SetResponseForValidation</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/validate") and (request.verb = "POST")</Condition>
+        </Flow>
+    </Flows>
+    <FaultRules>
+        <FaultRule name="auth_fail">
+            <Step>
+                <Name>Raise-Fault-Auth-Failed</Name>
+                <Condition>servicecallout.Authenticate.failed == true</Condition>
+            </Step>
+        </FaultRule>
+        <FaultRule name="validation_fail">
+            <Step>
+                <Name>Raise-Fault-Validation-Fail</Name>
+            </Step>
+            <Condition>oauthV2.failed == true</Condition>
+        </FaultRule>
+        <FaultRule name="invalid_refresh_token">
+            <Step>
+                <Name>Raise-Fault-Refresh-Token</Name>
+            </Step>
+            <Condition>(oauthV2.RefreshAccessToken.failed == true)</Condition>
+        </FaultRule>
+        <FaultRule name="invalid_key_rule">
+            <Step>
+                <Name>Raise-Fault-Key-Or-Secret</Name>
+            </Step>
+            <Condition>verifyapikey.Verify-API-Key.failed = true</Condition>
+        </FaultRule>
+    </FaultRules>
+    <DefaultFaultRule name="default-fault">
+        <Step>
+            <Name>Raise-Fault-Default</Name>
+        </Step>
+    </DefaultFaultRule>
+    <HTTPProxyConnection>
+        <BasePath>/oauth</BasePath>
+        <Properties/>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="noroute"/>
+</ProxyEndpoint>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OAuthV2 async="false" continueOnError="false" enabled="true" name="GenerateAccessToken">
+    <DisplayName>GenerateAccessToken</DisplayName>
+    <Properties/>
+    <Attributes>
+        <Attribute name="username" ref="apigee.username" display="true"/>
+    </Attributes>
+    <ExpiresIn ref="flow.variable">1800000</ExpiresIn>
+    <ExternalAuthorization>false</ExternalAuthorization>
+    <Operation>GenerateAccessToken</Operation>
+    <SupportedGrantTypes>
+        <GrantType>password</GrantType>
+    </SupportedGrantTypes>
+    <GenerateResponse enabled="false"/>
+    <Tokens/>
+</OAuthV2>

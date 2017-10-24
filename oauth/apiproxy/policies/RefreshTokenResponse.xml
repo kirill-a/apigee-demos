@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="RefreshTokenResponse">
+    <DisplayName>RefreshTokenResponse</DisplayName>
+    <FaultRules/>
+    <Properties/>
+    <Set>
+        <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">{"access_token":"%oauthv2accesstoken.RefreshAccessToken.access_token#","refresh_token":"%oauthv2accesstoken.RefreshAccessToken.refresh_token#","expires_in":"%oauthv2accesstoken.RefreshAccessToken.expires_in#","scope":"%oauthv2accesstoken.RefreshAccessToken.scope#","username":"%oauthv2accesstoken.RefreshAccessToken.username#"}</Payload>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo type="response" transport="https" createNew="true"/>
+</AssignMessage>

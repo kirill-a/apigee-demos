@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="8" name="oauth">
+    <Basepaths>/oauth</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1508765113849</CreatedAt>
+    <CreatedBy>kirill_ageev@epam.com</CreatedBy>
+    <Description></Description>
+    <DisplayName>oauth</DisplayName>
+    <LastModifiedAt>1508836961090</LastModifiedAt>
+    <LastModifiedBy>kirill_ageev@epam.com</LastModifiedBy>
+    <Policies>
+        <Policy>AccessTokenResponse</Policy>
+        <Policy>Authenticate</Policy>
+        <Policy>Decode-Basic-Authentication-Header</Policy>
+        <Policy>GenerateAccessToken</Policy>
+        <Policy>GetUserName</Policy>
+        <Policy>Raise-Fault-Auth-Failed</Policy>
+        <Policy>Raise-Fault-Default</Policy>
+        <Policy>Raise-Fault-Invalid-Grant</Policy>
+        <Policy>Raise-Fault-Key-Or-Secret</Policy>
+        <Policy>Raise-Fault-Missing-Creds</Policy>
+        <Policy>Raise-Fault-Refresh-Token</Policy>
+        <Policy>Raise-Fault-Validation-Fail</Policy>
+        <Policy>RefreshAccessToken</Policy>
+        <Policy>RefreshTokenResponse</Policy>
+        <Policy>SetResponseForValidation</Policy>
+        <Policy>ValidateToken</Policy>
+        <Policy>Verify-API-Key</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources/>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints/>
+    <validate>false</validate>
+</APIProxy>
