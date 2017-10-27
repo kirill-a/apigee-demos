@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TargetEndpoint name="SOAPAvailability">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>SetSearchUrl</Name>
+            </Step>
+        </Request>
+        <Response>
+            <Step>
+                <Name>Remove-Namespaces</Name>
+            </Step>
+            <Step>
+                <Name>Extract-Error-Message</Name>
+            </Step>
+            <Step>
+                <Name>XML-to-JSON</Name>
+                <Condition>(acceptformat !~ "*/xml")</Condition>
+            </Step>
+            <Step>
+                <Name>Raise-Fault-Bad-Request</Name>
+                <Condition>(message.reason.phrase = "Bad Request")</Condition>
+            </Step>
+            <Step>
+                <Name>Get-Response-SOAP-Body</Name>
+                <Condition>(contentformat == "application/json") OR (acceptformat !~ "*/xml")</Condition>
+            </Step>
+            <Step>
+                <Name>Get-Response-SOAP-Body-XML</Name>
+                <Condition>(contentformat != "application/json") OR (acceptformat ~ "*/xml")</Condition>
+            </Step>
+            <Step>
+                <Name>Set-Response-SOAP-Body-Accept</Name>
+                <Condition>(verb == "GET")</Condition>
+            </Step>
+        </Response>
+    </PreFlow>
+    <Flows/>
+    <HTTPTargetConnection>
+        <Properties/>
+        <LoadBalancer>
+            <Server name="RestEndpoint"/>
+        </LoadBalancer>
+        <Path>/v1/availability</Path>
+    </HTTPTargetConnection>
+</TargetEndpoint>

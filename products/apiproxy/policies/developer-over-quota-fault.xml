@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="developer-over-quota-fault">
+    <DisplayName>Raise Fault over quota</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers>
+                <Header name="X-API-Error">{error.content}</Header>
+            </Headers>
+            <Payload contentType="text/plain"/>
+            <StatusCode>401</StatusCode>
+            <ReasonPhrase>You have run out of quota</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

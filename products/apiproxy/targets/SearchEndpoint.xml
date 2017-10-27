@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TargetEndpoint name="SearchEndpoint">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>SetSearchUrl</Name>
+            </Step>
+        </Request>
+        <Response>
+        </Response>
+    </PreFlow>
+    <Flows/>
+    <HTTPTargetConnection>
+        <LoadBalancer>
+            <Server name="RestEndpoint"/>
+        </LoadBalancer>
+        <Path>/v1/product/search</Path>
+    </HTTPTargetConnection>
+</TargetEndpoint>

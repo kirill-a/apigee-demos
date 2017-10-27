@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="SearchEndpoint">
+        <Request>
+            <Step>
+                <Name>Spike-Arrest</Name>
+            </Step>
+            <Step>
+                <Name>verify-oauth-v2-access-token</Name>
+            </Step>
+            <Step>
+                <Name>impose-quota</Name>
+            </Step>
+            <Step>
+                <Name>Response-Cache</Name>
+            </Step>
+            <Step>
+                <Name>remove-header-authorization</Name>
+            </Step>
+            <Step>
+                <Name>Set-Login</Name>
+            </Step>
+            <Step>
+                <Name>Get-Credentials</Name>
+            </Step>
+            <Step>
+                <Name>Encode-creds</Name>
+            </Step>
+            <Step>
+                <Name>Extract-Format</Name>
+            </Step>
+        </Request>
+        <Response>
+            <Step>
+                <Name>JSON-to-XML</Name>
+                <Condition>(acceptformat ~ "*/xml") AND (response.header.Content-Type == "application/json")</Condition>
+            </Step>
+            <Step>
+                <Name>Extract-Response-Json</Name>
+            </Step>
+            <Step>
+                <Name>Raise-Fault-Not-found</Name>
+                <Condition>((apigee.products == "NULL") OR (apigee.productsx == "") OR (apigee.productsy == "[]"))</Condition>
+            </Step>
+            <Step>
+                <Name>Response-Cache</Name>
+            </Step>
+        </Response>
+    </PreFlow>
+    <Flows>
+        <Flow name="GetProductById">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>SaveProductId</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/products/*") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="GetProducts">
+            <Description/>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/products") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="GetAvailability">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>GetAvailability-Build-SOAP</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/productAvailability") and (request.verb = "GET")</Condition>
+        </Flow>
+    </Flows>
+    <FaultRules>
+        <FaultRule name="over_quota">
+            <Step>
+                <Name>Add-Quota</Name>
+            </Step>
+            <Step>
+                <Name>developer-over-quota-fault</Name>
+                <Condition>(ratelimit.impose-quota.exceed.count GreaterThan "0")</Condition>
+            </Step>
+            <Condition>(fault.name = "QuotaViolation")</Condition>
+        </FaultRule>
+        <FaultRule name="auth_fail">
+            <Step>
+                <Name>Raise-Fault-Auth-Failed</Name>
+            </Step>
+            <Condition>message.reason.phrase = "Unauthorized"</Condition>
+        </FaultRule>
+        <FaultRule name="validation_fail">
+            <Step>
+                <Name>Raise-Fault-Not-found</Name>
+            </Step>
+            <Condition>(message.reason.phrase = "Not found") OR (message.reason.phrase = "Not Found")</Condition>
+        </FaultRule>
+    </FaultRules>
+    <DefaultFaultRule name="default-fault">
+        <Step>
+            <Name>Raise-Fault-Default</Name>
+        </Step>
+    </DefaultFaultRule>
+    <HTTPProxyConnection>
+        <BasePath>/edgemarket</BasePath>
+        <Properties/>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="avail">
+        <Condition>(proxy.pathsuffix MatchesPath "/productAvailability")</Condition>
+        <TargetEndpoint>SOAPAvailability</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="search">
+        <Condition>(proxy.pathsuffix MatchesPath "/products") and (request.querystring != "")</Condition>
+        <TargetEndpoint>SearchEndpoint</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="default">
+        <TargetEndpoint>default</TargetEndpoint>
+        <Condition>(proxy.pathsuffix MatchesPath "/products")</Condition>
+    </RouteRule>
+    <RouteRule name="getById">
+        <Condition>(proxy.pathsuffix MatchesPath "/products/*")</Condition>
+        <TargetEndpoint>GetById</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>

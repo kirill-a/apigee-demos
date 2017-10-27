@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="GetAvailability-Build-SOAP">
+    <DisplayName>GetAvailability Build SOAP</DisplayName>
+    <Add>
+        <Headers>
+            <Header name="SOAPAction">http://www.apigee.com/apigee-edu/availability/getAvailability</Header>
+        </Headers>
+    </Add>
+    <Set>
+        <Headers>
+            <Header name="Content-Type">text/xml; charset=utf-8</Header>
+        </Headers>
+        <Payload contentType="text/xml">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.apigee.com/apigee-edu/availability/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                <soapenv:Body>
+                    <Search xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="{type}">
+                        <stores xmlns:ns1="http://www.apigee.com/apigee-edu/availability/">
+                            <!-- from 0 to 3 -->
+                            <storeid>{request.queryparam.storeid}</storeid>
+                        </stores>
+                        <products xmlns:ns1="http://www.apigee.com/apigee-edu/availability/">
+                            <!-- from 0 to 3 -->
+                            <productid>{request.queryparam.productid}</productid>
+                        </products>
+                    </Search>
+                </soapenv:Body>
+            </soapenv:Envelope>
+        </Payload>
+        <Verb>POST</Verb>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

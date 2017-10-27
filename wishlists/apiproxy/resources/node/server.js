@@ -388,7 +388,9 @@ function createWishlist(e, req, res) {
 		o.set(e);
 		o.save(function(err) {
 			if (err) {
-				res.jsonp(500, err);
+				res.jsonp(400, {
+			        error : 'Name must be unique'
+		        });;
 				return;
 			}
 			res.jsonp(201, o._data.uuid);

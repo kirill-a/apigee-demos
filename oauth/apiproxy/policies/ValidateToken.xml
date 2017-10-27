@@ -3,7 +3,7 @@
     <DisplayName>ValidateToken</DisplayName>
     <Properties/>
     <Attributes/>
-    <AccessToken>request.header.accesstoken</AccessToken>
+    <AccessToken>request.formparam.accesstoken</AccessToken>
     <ExternalAuthorization>false</ExternalAuthorization>
     <Operation>VerifyAccessToken</Operation>
     <ReuseRefreshToken>false</ReuseRefreshToken>

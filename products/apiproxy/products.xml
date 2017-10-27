@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="13" name="products">
+    <Basepaths>/edgemarket</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1508922945697</CreatedAt>
+    <CreatedBy>kirill_ageev@epam.com</CreatedBy>
+    <Description>Product Availability in Stores and Product Search</Description>
+    <DisplayName>edgemarket</DisplayName>
+    <LastModifiedAt>1508936615170</LastModifiedAt>
+    <LastModifiedBy>kirill_ageev@epam.com</LastModifiedBy>
+    <Policies>
+        <Policy>Add-Quota</Policy>
+        <Policy>Encode-creds</Policy>
+        <Policy>Extract-Error-Message</Policy>
+        <Policy>Extract-Format</Policy>
+        <Policy>Extract-Response-Json</Policy>
+        <Policy>Get-Credentials</Policy>
+        <Policy>Get-Response-SOAP-Body-XML</Policy>
+        <Policy>Get-Response-SOAP-Body</Policy>
+        <Policy>GetAvailability-Build-SOAP</Policy>
+        <Policy>JSON-to-XML</Policy>
+        <Policy>Raise-Fault-Auth-Failed</Policy>
+        <Policy>Raise-Fault-Bad-Request</Policy>
+        <Policy>Raise-Fault-Default</Policy>
+        <Policy>Raise-Fault-Not-found</Policy>
+        <Policy>Remove-Namespaces</Policy>
+        <Policy>Response-Cache</Policy>
+        <Policy>SaveProductId</Policy>
+        <Policy>Set-Login</Policy>
+        <Policy>Set-Response-SOAP-Body-Accept</Policy>
+        <Policy>SetSearchUrl</Policy>
+        <Policy>Spike-Arrest</Policy>
+        <Policy>XML-to-JSON</Policy>
+        <Policy>developer-over-quota-fault</Policy>
+        <Policy>impose-quota</Policy>
+        <Policy>remove-header-authorization</Policy>
+        <Policy>verify-oauth-v2-access-token</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>xsl://remove-namespaces.xsl</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>GetById</TargetEndpoint>
+        <TargetEndpoint>SOAPAvailability</TargetEndpoint>
+        <TargetEndpoint>SearchEndpoint</TargetEndpoint>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+    <validate>false</validate>
+</APIProxy>

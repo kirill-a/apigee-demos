@@ -14,10 +14,6 @@
                 <Name>Raise-Fault-Key-Or-Secret</Name>
                 <Condition>verifyapikey.Verify-API-Key.client_secret != inbound_client_secret</Condition>
             </Step>
-            <Step>
-                <Name>Raise-Fault-Invalid-Grant</Name>
-                <Condition>((request.formparam.grant_type != "password") AND (request.formparam.grant_type != "refresh_token"))</Condition>
-            </Step>
         </Request>
         <Response/>
     </PreFlow>
@@ -32,6 +28,10 @@
                 <Step>
                     <Name>Raise-Fault-Missing-Creds</Name>
                     <Condition>request.formparam.username = null OR request.formparam.password = null</Condition>
+                </Step>
+                <Step>
+                    <Name>Raise-Fault-Invalid-Grant</Name>
+                    <Condition>(request.formparam.grant_type != "password")</Condition>
                 </Step>
                 <Step>
                     <Name>Set-Login-Name</Name>
@@ -61,7 +61,7 @@
                     <Name>AccessTokenResponse</Name>
                 </Step>
             </Response>
-            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.formparam.grant_type == "password") and (request.verb = "POST")</Condition>
+            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST") and (request.formparam.grant_type != "refresh_token")</Condition>
         </Flow>
         <Flow name="GetRefreshToken">
             <Description/>

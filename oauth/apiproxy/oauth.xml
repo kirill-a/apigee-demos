@@ -6,7 +6,7 @@
     <CreatedBy>kirill_ageev@epam.com</CreatedBy>
     <Description></Description>
     <DisplayName>oauth</DisplayName>
-    <LastModifiedAt>1508838670151</LastModifiedAt>
+    <LastModifiedAt>1508919707120</LastModifiedAt>
     <LastModifiedBy>kirill_ageev@epam.com</LastModifiedBy>
     <Policies>
         <Policy>AccessTokenResponse</Policy>

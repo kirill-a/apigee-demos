@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BasicAuthentication async="false" continueOnError="false" enabled="true" name="Encode-creds">
+    <DisplayName>Encode creds</DisplayName>
+    <Operation>Encode</Operation>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    <User ref="login"/>
+    <Password ref="pass"/>
+    <AssignTo createNew="true">request.header.Authorization</AssignTo>
+    <Source>request.header.Authorization</Source>
+</BasicAuthentication>

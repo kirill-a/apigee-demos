@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="Extract-Error-Message">
+    <DisplayName>Extract Error Message</DisplayName>
+    <XMLPayload stopPayloadProcessing="false">
+        <Namespaces/>
+        <Variable name="errorMsg" type="string">
+            <XPath>//Envelope/Body/Error/message/text()</XPath>
+        </Variable>
+    </XMLPayload>
+</ExtractVariables>

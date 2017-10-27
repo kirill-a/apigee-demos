@@ -6,7 +6,7 @@
     <CreatedBy>kirill_ageev@epam.com</CreatedBy>
     <Description></Description>
     <DisplayName>wishlists</DisplayName>
-    <LastModifiedAt>1508763079933</LastModifiedAt>
+    <LastModifiedAt>1508966035534</LastModifiedAt>
     <LastModifiedBy>kirill_ageev@epam.com</LastModifiedBy>
     <Policies>
         <Policy>remove-header-authorization</Policy>

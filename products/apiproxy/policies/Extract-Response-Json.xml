@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="Extract-Response-Json">
+    <DisplayName>Extract Response</DisplayName>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <JSONPayload>
+        <Variable name="products">
+            <JSONPath>$.Products</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <JSONPayload>
+        <Variable name="productsy">
+            <JSONPath>$.products</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <XMLPayload>
+        <Variable name="productsx">
+            <XPath>//Products</XPath>
+        </Variable>
+    </XMLPayload>
+    <VariablePrefix>apigee</VariablePrefix>
+</ExtractVariables>
