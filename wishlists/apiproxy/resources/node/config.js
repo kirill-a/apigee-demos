@@ -1,7 +1,7 @@
-exports.organization = 'apigee-certify'
-exports.application = 'exam-06'
-exports.userName = 'examuser'
-exports.password = 'uGyF3ukQ1i1'
+exports.organization = 'sample'
+exports.application = 'sample'
+exports.userName = 'sample'
+exports.password = 'sample'
 exports.tokenExpiration = 60000
 exports.logging = true
-exports.uri = 'https://apigee-edu-prod.apigee.net/appservices/'
+exports.uri = 'https://apigee-sample.apigee.net/appservices/'
