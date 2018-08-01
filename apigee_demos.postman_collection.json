@@ -1,0 +1,2418 @@
+{
+	"info": {
+		"_postman_id": "569e5d63-8f89-edcc-7cd5-22201beb85c3",
+		"name": "apigee_demos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "56c76952-722a-46a4-9572-d490a80421e1",
+			"name": "OAuth",
+			"item": [
+				{
+					"_postman_id": "b8c1f0a8-fade-4013-8ced-9a3b60077b5c",
+					"name": "Authorize and get access token OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Access token is not empty\", function () {",
+									"    var token = pm.response.json().access_token;",
+									"    pm.globals.set(\"access_token\", token);",
+									"    console.log(token);",
+									"    pm.expect(!token).to.be.false;",
+									"});",
+									"",
+									"pm.test(\"Refresh token is not empty\", function () {",
+									"    var r_token = pm.response.json().refresh_token;",
+									"    pm.globals.set(\"refresh_token\", r_token);",
+									"    console.log(r_token);",
+									"    pm.expect(!r_token).to.be.false;",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "L3EJv1BN71MdMJRv9G34ZaOVpo9cWHuK",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "mLATOU4dSFB9xWEj",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/oauth/token",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "80ab2b99-bc33-4986-b79b-43c560f20960",
+					"name": "Refresh token OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Access token is not empty\", function () {",
+									"    var token = pm.response.json().access_token;",
+									"    pm.globals.set(\"access_token\", token);",
+									"    console.log(token);",
+									"    pm.expect(!token).to.be.false;",
+									"});",
+									"",
+									"pm.test(\"Refresh token is not empty\", function () {",
+									"    var r_token = pm.response.json().refresh_token;",
+									"    pm.globals.set(\"refresh_token\", r_token);",
+									"    console.log(r_token);",
+									"    pm.expect(!r_token).to.be.false;",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "L3EJv1BN71MdMJRv9G34ZaOVpo9cWHuK",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "mLATOU4dSFB9xWEj",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "{{refresh_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/oauth/token",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "8babe801-abeb-42c6-aa31-cb05cd5bb3ad",
+					"name": "Refresh token Error 401 Invalid refresh token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "L3EJv1BN71MdMJRv9G34ZaOVpo9cWHuK",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "mLATOU4dSFB9xWEj",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "zsDVmexWxZfwKpG06XRCcVVtwXwG3AGg",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/oauth/token",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "6e2e5af7-e48f-4f02-a1ef-94cd09b7ca81",
+					"name": "Authorize and get access token OK 401 Incorrect Username or Password",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "L3EJv1BN71MdMJRv9G34ZaOVpo9cWHuK",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "mLATOU4dSFB9xWEj",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/oauth/token",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "67d198b1-4676-496a-8af1-5ab8703b6ddc",
+					"name": "Authorize and get access token 401 Incorrect API Key or Secret",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "L3EJv1BN71MdMJRv9G34ZaOVpo9cWHuK",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "mLATOU4dSFB9xWEs",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/oauth/token",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "c3d1a7bd-ec42-4004-81c0-63197c8305d7",
+					"name": "Authorize and get access token OK 401 Incorrect API Invalid grant",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "L3EJv1BN71MdMJRv9G34ZaOVpo9cWHuK",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "mLATOU4dSFB9xWEj",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/oauth/token",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "f8f436bf-0efd-409f-af9a-3f25388dd420",
+					"name": "Authorize Validate OK",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "L3EJv1BN71MdMJRv9G34ZaOVpo9cWHuK",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "mLATOU4dSFB9xWEj",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "accesstoken",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/oauth/validate",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"oauth",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "6ba1f46d-3236-4be3-ac96-00190c5399ed",
+					"name": "Authorize Validate Error 401 Invalid Access Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "L3EJv1BN71MdMJRv9G34ZaOVpo9cWHuK",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "mLATOU4dSFB9xWEj",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "Qxq0oPQd3AILRwlpRNe48obBYo1"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/oauth/validate",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"oauth",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "d7ed8225-0cd5-42fb-923d-8368bfa92727",
+			"name": "Products API",
+			"item": [
+				{
+					"_postman_id": "7af34dcc-740d-4e77-ae94-a42ea87022a5",
+					"name": "Products get json OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/products",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "7afcda93-e302-4d95-a4c0-b782b201d882",
+					"name": "Products get XML OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "text/xml"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/products",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "d04bfb6e-dfd6-42d1-80ce-006ee1dfb26e",
+					"name": "Products By ID json OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/products/NL-3600-02",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"products",
+								"NL-3600-02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "886d4076-6f67-44af-8305-cb54ea0de81b",
+					"name": "Products By ID XML OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/products/NL-3600-02",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"products",
+								"NL-3600-02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "a7ae18b5-a0ac-45cc-b2bd-9d8d3462e726",
+					"name": "Products Search by Color",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/products?color=white",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"products"
+							],
+							"query": [
+								{
+									"key": "color",
+									"value": "white"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "3d2dc5c6-2476-4792-a64c-2d5027c86413",
+					"name": "Products Search by Color and  Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/products?productid=NL-3600-02&color=Grey",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"products"
+							],
+							"query": [
+								{
+									"key": "productid",
+									"value": "NL-3600-02"
+								},
+								{
+									"key": "color",
+									"value": "Grey"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "628428d8-8163-4c83-9911-bb92c3c56f77",
+					"name": "Products Availability Search by ProductId and StoreId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/productAvailability?productid=PMS-1655-02&storeid=201",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"productAvailability"
+							],
+							"query": [
+								{
+									"key": "productid",
+									"value": "PMS-1655-02"
+								},
+								{
+									"key": "storeid",
+									"value": "201"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "e32f3aee-789d-4683-96f8-c8b96003e975",
+					"name": "Products Availability Search by ProductId and StoreId XML",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/productAvailability?productid=PMS-1655-02&storeid=201",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"productAvailability"
+							],
+							"query": [
+								{
+									"key": "productid",
+									"value": "PMS-1655-02"
+								},
+								{
+									"key": "storeid",
+									"value": "201"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "2eec6e79-ae49-4990-bf44-189653c95aa6",
+					"name": "Products Availability Search by StoreId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/productAvailability?storeid=201",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"productAvailability"
+							],
+							"query": [
+								{
+									"key": "storeid",
+									"value": "201"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "41aa725b-07ab-453a-a534-44edf1819d03",
+					"name": "Products Availability Search by ProductId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/productAvailability?productid=PMS-1655-02",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"productAvailability"
+							],
+							"query": [
+								{
+									"key": "productid",
+									"value": "PMS-1655-02"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "c3534269-5982-4001-9268-42c149a0f215",
+					"name": "Products Availability Search by ProductId XML",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/productAvailability?productid=PMS-1655-02",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"productAvailability"
+							],
+							"query": [
+								{
+									"key": "productid",
+									"value": "PMS-1655-02"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "0b8718d8-544f-4bb0-bea9-be920f217c26",
+					"name": "Products Availability Search by ProductId 404 Not Found XML",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/productAvailability?productid=PMS-1655-05",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"productAvailability"
+							],
+							"query": [
+								{
+									"key": "productid",
+									"value": "PMS-1655-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "001c3737-016c-4db0-abd1-90d7cea1eb57",
+					"name": "Products Availability Search by ProductId 404 Not Found Json",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/productAvailability?productid=PMS-1655-05",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"productAvailability"
+							],
+							"query": [
+								{
+									"key": "productid",
+									"value": "PMS-1655-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "a9329d5f-669d-4b99-84a8-2f9d89e7db60",
+					"name": "Products Search by Color 404 Not Found Json",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/products?color=7",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"products"
+							],
+							"query": [
+								{
+									"key": "color",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "8dd2ce99-0361-4d9f-8bcf-25bb47fcbcbe",
+					"name": "Products Search by Color 404 Not Found XML",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/products?color=7",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"products"
+							],
+							"query": [
+								{
+									"key": "color",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "996808d2-602b-427c-abff-bd518a0a72ad",
+					"name": "Products Availability Search Error 401 Bad Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "certification1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apigee-certify-06-prod.apigee.net/edgemarket/productAvailability",
+							"protocol": "https",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"edgemarket",
+								"productAvailability"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "1bacf89a-7a0e-4ff5-80ff-a0086ae000bb",
+			"name": "Wishlists API",
+			"item": [
+				{
+					"_postman_id": "8c7279d1-2de1-4771-9037-79535fc07217",
+					"name": "POST Wishlist OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": [\"PMS-425-02\", \"NL-3600-02\"],\n  \"name\" : \"my 29 list\"\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "5401cca9-30b5-4567-afee-7cd28681c061",
+					"name": "POST Wishlist Empty Body - Error 400 Bad Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": []\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "fe2204e4-8360-4544-8902-fc22b9151d3e",
+					"name": "DELETE Wishlists by ID OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/661d02e0-ba1b-11e7-87ef-12dcd08f689c",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"661d02e0-ba1b-11e7-87ef-12dcd08f689c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "33f58e24-412e-4c4d-97cf-9623fdcab3d8",
+					"name": "DELETE Wishlists by ID Another user - Error 404 Not Found",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/b8adecb0-b7e1-11e7-af2c-0e69f823009a",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"b8adecb0-b7e1-11e7-af2c-0e69f823009a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "3bc8a2c5-e2f9-49d9-8ad9-cabe1d3301be",
+					"name": "GET Wishlists OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <Search>\n         <stores>\n            <!--0 to 3 repetitions:-->\n            <storeid>201</storeid>\n         </stores>\n         <products>\n            <!--0 to 3 repetitions:-->\n            <productid>PMS-425-02</productid>\n         </products>\n      </Search>\n   </soapenv:Body>\n</soapenv:Envelope>"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "971210dd-d42f-40a1-b8fb-a4fde6004717",
+					"name": "GET Wishlists by ID OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <Search>\n         <stores>\n            <!--0 to 3 repetitions:-->\n            <storeid>201</storeid>\n         </stores>\n         <products>\n            <!--0 to 3 repetitions:-->\n            <productid>PMS-425-02</productid>\n         </products>\n      </Search>\n   </soapenv:Body>\n</soapenv:Envelope>"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/029cb440-b7e4-11e7-af2c-0e69f823009a",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"029cb440-b7e4-11e7-af2c-0e69f823009a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "ed7e28df-c6dd-4af6-bbd5-3cf0a0255895",
+					"name": "GET Wishlists by ID Another user - Error 404 Not Found",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <Search>\n         <stores>\n            <!--0 to 3 repetitions:-->\n            <storeid>201</storeid>\n         </stores>\n         <products>\n            <!--0 to 3 repetitions:-->\n            <productid>PMS-425-02</productid>\n         </products>\n      </Search>\n   </soapenv:Body>\n</soapenv:Envelope>"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/b4902ebb-b7de-11e7-b127-0ec25ecb10a2",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"b4902ebb-b7de-11e7-b127-0ec25ecb10a2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "0e6fbf63-4cf0-4c49-b857-d5808b4c6f24",
+					"name": "PUT Wishlists by ID OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": [\"PMS-425-02\", \"NL-3600-03\", \"PMS-1655-04\"]\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/029cb440-b7e4-11e7-af2c-0e69f823009a",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"029cb440-b7e4-11e7-af2c-0e69f823009a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "47df8003-c6af-44d1-a5d7-083c85e4b050",
+					"name": "PUT Wishlists by ID Empty Body - Error 400 Bad Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": []\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/b8adecb0-b7e1-11e7-af2c-0e69f823009a",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"b8adecb0-b7e1-11e7-af2c-0e69f823009a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "495299bf-191c-4454-8b69-a5ad36726e76",
+					"name": "PUT Wishlists by ID Another User - Error 404 Not Found",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": [\"PMS-425-02\", \"NL-3600-03\", \"PMS-1655-04\"]\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/b8adecb0-b7e1-11e7-af2c-0e69f823009a",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"b8adecb0-b7e1-11e7-af2c-0e69f823009a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "13ebc020-8cf0-41f7-b450-7e15c54653f4",
+					"name": "POST Wishlists by ID ADD product OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": [\"PMS-425-02\", \"NL-3600-03\", \"PMS-1655-04\"]\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/c627a198-b7e1-11e7-b83a-0e75f8b45832/products",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"c627a198-b7e1-11e7-b83a-0e75f8b45832",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "dcc5512d-afc4-4661-b2d4-f7e41c5ed7fb",
+					"name": "POST Wishlists by ID ADD product Another User - Error 404 Not Found",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": [\"PMS-425-02\", \"NL-3600-03\", \"PMS-1655-04\"]\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/cb686a9b-b7de-11e7-b9f6-120b90797502/products",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"cb686a9b-b7de-11e7-b9f6-120b90797502",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "46fd59d3-dc9d-4c30-addf-33645fbc0d40",
+					"name": "POST Wishlists by ID ADD product Empty Body - Error 400 Bad Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/0ff39769-b748-11e7-af2c-0e69f823009a/products",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"0ff39769-b748-11e7-af2c-0e69f823009a",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "ab79aafc-a831-4220-9e9a-5415a964fd04",
+					"name": "DELETE Product by Wishlist ID OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": [\"PMS-425-02\"]\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/c627a198-b7e1-11e7-b83a-0e75f8b45832/products",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"c627a198-b7e1-11e7-b83a-0e75f8b45832",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "9f2e8916-d751-44a3-9377-86dc2056beba",
+					"name": "DELETE Product by Wishlist ID Another User - Error 404 Not Found",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": [\"PMS-425-02\"]\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/b4902ebb-b7de-11e7-b127-0ec25ecb10a2/products",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"b4902ebb-b7de-11e7-b127-0ec25ecb10a2",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "c77fb509-4db4-474b-a9f3-e27841008f20",
+					"name": "DELETE Product by Wishlist ID Empty Body - Error 400 Bad Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9EYmraeTOnEmAAEewJY0NATmwsrA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"products\": []\n}"
+						},
+						"url": {
+							"raw": "http://apigee-certify-06-prod.apigee.net/wishlists/b4902ebb-b7de-11e7-b127-0ec25ecb10a2/products",
+							"protocol": "http",
+							"host": [
+								"apigee-certify-06-prod",
+								"apigee",
+								"net"
+							],
+							"path": [
+								"wishlists",
+								"b4902ebb-b7de-11e7-b127-0ec25ecb10a2",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
